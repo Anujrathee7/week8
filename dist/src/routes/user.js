@@ -67,7 +67,7 @@ router.post("/user/login", inputValidaton_1.loginValidation, async (req, res) =>
 });
 router.get('/topics', async (req, res) => {
     try {
-        const tasks = await Topic_1.Task.find({});
+        const tasks = await Topic_1.Topic.find({});
         return res.json(tasks);
     }
     catch (error) {
@@ -79,12 +79,13 @@ router.post('/topic', validateToken_1.authenticateUser, async (req, res) => {
     try {
         const { title, content } = req.body;
         const username = req.user?.username;
-        const topic = await Topic_1.Task.create({
+        const topic = await Topic_1.Topic.create({
             title,
             content,
             username,
             createdAt: new Date()
         });
+        return res.status(200).json(topic);
     }
     catch (error) {
         console.log(error);
@@ -93,7 +94,7 @@ router.post('/topic', validateToken_1.authenticateUser, async (req, res) => {
 });
 router.delete('/topic/:id', validateToken_1.authenticateAdmin, async (req, res) => {
     try {
-        await Topic_1.Task.findByIdAndDelete(req.params.id);
+        await Topic_1.Topic.findByIdAndDelete(req.params.id);
         return res.json({ message: 'Topic deleted successfully.' });
     }
     catch (error) {

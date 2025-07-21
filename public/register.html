@@ -3,103 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Topic Forum</title>
-    <!-- MaterializeCSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <title>Register</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        .register-container {
-            margin-top: 50px;
-        }
-        .register-card {
-            padding: 30px;
-        }
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
-<body class="blue-grey lighten-5">
-    <nav class="blue darken-2">
-        <div class="nav-wrapper">
-            <div class="container">
-                <a href="/" class="brand-logo left">Topic Forum</a>
-                <ul class="right">
-                    <li><a href="/">Back to Home</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container register-container">
+<body>
+    <div class="container">
         <div class="row">
             <div class="col s12 m8 offset-m2 l6 offset-l3">
-                <div class="card register-card">
+                <div class="card">
                     <div class="card-content">
-                        <div class="brand-logo">
-                            <h4 class="blue-text text-darken-2">Register</h4>
-                            <p class="grey-text">Create your account</p>
-                        </div>
-
+                        <span class="card-title">Register</span>
                         <form id="registerForm">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">email</i>
-                                    <input id="email" type="email" class="validate" required>
-                                    <label for="email">Email Address</label>
-                                </div>
+                            <div class="input-field">
+                                <input id="email" type="email" class="validate" required>
+                                <label for="email">Email</label>
                             </div>
-
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">person</i>
-                                    <input id="username" type="text" class="validate" required>
-                                    <label for="username">Username (3-25 characters)</label>
-                                </div>
+                            <div class="input-field">
+                                <input id="username" type="text" class="validate" required>
+                                <label for="username">Username</label>
                             </div>
-
-                            <div class="row">
-                                <div class="input-field col s12">
-                                    <i class="material-icons prefix">lock</i>
-                                    <input id="password" type="password" class="validate" required>
-                                    <label for="password">Password</label>
-                                </div>
+                            <div class="input-field">
+                                <input id="password" type="password" class="validate" required>
+                                <label for="password">Password</label>
                             </div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <p class="grey-text text-darken-1">
-                                        <small>
-                                            Password requirements: At least 8 characters, 1 uppercase, 1 lowercase, 1 number, and 1 special character
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <label>
-                                        <input id="isAdmin" type="checkbox" />
-                                        <span>Register as Admin</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s12">
-                                    <button type="submit" class="btn waves-effect waves-light blue darken-2 col s12">
-                                        Register
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col s12 center-align">
-                                    <p>Already have an account? <a href="/" class="blue-text">Login here</a></p>
-                                </div>
-                            </div>
+                            <p>
+                                <label>
+                                    <input id="isAdmin" type="checkbox">
+                                    <span>Admin User</span>
+                                </label>
+                            </p>
+                            <button type="submit" class="btn waves-effect waves-light">Register</button>
+                            <a href="/" class="btn-flat">Back to Login</a>
                         </form>
                     </div>
                 </div>
@@ -107,115 +44,47 @@
         </div>
     </div>
 
-    <!-- MaterializeCSS JavaScript -->
+    <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize MaterializeCSS components
-            M.AutoInit();
-        });
-
-        // Register form handler
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+            const registerForm = document.getElementById('registerForm');
             
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const isAdmin = document.getElementById('isAdmin').checked;
-
-            // Client-side validation
-            if (!validateForm(email, username, password)) {
-                return;
-            }
-
-            try {
-                const response = await fetch('api/user/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email,
-                        username,
-                        password,
-                        isAdmin
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    M.toast({
-                        html: 'Registration successful! Redirecting to login...',
-                        classes: 'green',
-                        displayLength: 3000
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const isAdmin = document.getElementById('isAdmin').checked;
+                
+                try {
+                    const response = await fetch('/api/user/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email,
+                            username,
+                            password,
+                            isAdmin
+                        })
                     });
                     
-                    // Redirect to index.html after 2 seconds
-                    setTimeout(() => {
+                    if (response.ok) {
+                        alert('Registration successful!');
                         window.location.href = '/';
-                    }, 2000);
-                } else {
-                    // Handle validation errors
-                    if (data.errors) {
-                        const errorMessages = data.errors.map(error => error.msg).join('<br>');
-                        M.toast({
-                            html: errorMessages,
-                            classes: 'red',
-                            displayLength: 5000
-                        });
                     } else {
-                        M.toast({
-                            html: data.message || 'Registration failed',
-                            classes: 'red',
-                            displayLength: 4000
-                        });
+                        const error = await response.json();
+                        alert('Registration failed: ' + (error.message || 'Unknown error'));
                     }
+                } catch (error) {
+                    alert('Registration failed: ' + error.message);
                 }
-            } catch (error) {
-                M.toast({
-                    html: 'Registration error: ' + error.message,
-                    classes: 'red',
-                    displayLength: 4000
-                });
-            }
+            });
         });
-
-        function validateForm(email, username, password) {
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                M.toast({
-                    html: 'Please enter a valid email address',
-                    classes: 'red'
-                });
-                return false;
-            }
-
-            // Username validation
-            if (username.length < 3 || username.length > 25) {
-                M.toast({
-                    html: 'Username must be between 3 and 25 characters',
-                    classes: 'red'
-                });
-                return false;
-            }
-
-            // Password validation
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#!&?@$%^*()_+=\-\[\]{}|;:,.<>])/;
-            if (password.length < 8 || !passwordRegex.test(password)) {
-                M.toast({
-                    html: 'Password must be at least 8 characters with 1 uppercase, 1 lowercase, 1 number, and 1 special character',
-                    classes: 'red',
-                    displayLength: 5000
-                });
-                return false;
-            }
-
-            return true;
-        }
     </script>
 </body>
 </html>
