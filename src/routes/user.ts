@@ -6,7 +6,7 @@ import jwt,{ JwtPayload } from "jsonwebtoken";
 import { registerValidation, loginValidation } from "../validators/inputValidaton";
 import { validationResult } from "express-validator";
 import authRequest,{ authenticateAdmin, authenticateUser } from "../middleware/validateToken";
-import { Task,ITask } from "../models/Topic";
+import { Topic, ITopic } from "../models/Topic";
 
 dotenv.config()
 
@@ -80,7 +80,7 @@ router.post("/user/login", loginValidation, async(req: Request, res: Response)=>
 
 router.get('/topics',async(req: Request, res:Response)=>{
     try{
-        const tasks: ITask[] = await Task.find({})
+        const tasks: ITopic[] = await Topic.find({})
 
         return res.json(tasks)
 
@@ -95,7 +95,7 @@ router.post('/topic',authenticateUser,async(req: authRequest, res: Response)=>{
         const {title,content} = req.body
         const username = req.user?.username
 
-        const topic: ITask = await Task.create({
+        const topic: ITopic = await Topic.create({
             title,
             content,
             username,
@@ -110,7 +110,7 @@ router.post('/topic',authenticateUser,async(req: authRequest, res: Response)=>{
 
 router.delete('/topic/:id',authenticateAdmin,async (req: Request, res: Response)=>{
     try{
-        await Task.findByIdAndDelete(req.params.id)
+        await Topic.findByIdAndDelete(req.params.id)
         return res.json({ message: 'Topic deleted successfully.' });
 
     }catch(error){
