@@ -102,6 +102,8 @@ router.post('/topic',authenticateUser,async(req: authRequest, res: Response)=>{
             createdAt: new Date()
         })
 
+        return res.status(200)
+
     }catch(error){
         console.log(error)
         res.status(404).json("Server Error")
